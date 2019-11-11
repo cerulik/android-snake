@@ -1,0 +1,7 @@
+<resources>
+    <string name="app_name">Snake</string>
+    <string name="snake_view_btn_up_label">UP</string>
+    <string name="snake_view_btn_left_label">LEFT</string>
+    <string name="snake_view_btn_right_label">RIGHT</string>
+    <string name="snake_view_btn_down_label">DOWN</string>
+</resources>
