@@ -40,6 +40,7 @@ public class SnakeView extends View {
 
         snake.update(width, height);
         snake.show(canvas);
+        invalidate();
     }
 
     @Override

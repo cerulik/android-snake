@@ -16,8 +16,6 @@ public class MainActivity extends AppCompatActivity {
 
         snakeView = findViewById(R.id.snakeView);
 
-        new SnakeTimer(snakeView);
-
         findViewById(R.id.btn_up).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
