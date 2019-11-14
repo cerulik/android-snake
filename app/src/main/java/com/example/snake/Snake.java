@@ -9,14 +9,14 @@ public class Snake {
     private int y;
     private int speedX;
     private int speedY;
-    private int size = 10;
+    private int cellSize;
 
-    public Snake(int x, int y, int speedX, int speedY, float density) {
+    public Snake(int x, int y, int speedX, int speedY, int cellSize) {
         this.x = x;
         this.y = y;
         this.speedX = speedX;
         this.speedY = speedY;
-        this.size *= density;
+        this.cellSize = cellSize;
     }
 
     public void dir(int x, int y) {
@@ -25,15 +25,15 @@ public class Snake {
     }
 
     public void update(int width, int height) {
-        int newX = x + speedX * size;
+        int newX = x + speedX * cellSize;
 
-        if (newX >= 0 && width >= newX + size) {
+        if (newX >= 0 && width >= newX + cellSize) {
             x = newX;
         }
 
-        int newY = y + speedY * size;
+        int newY = y + speedY * cellSize;
 
-        if (newY >= 0 && height >= newY + size) {
+        if (newY >= 0 && height >= newY + cellSize) {
             y = newY;
         }
     }
@@ -42,6 +42,14 @@ public class Snake {
         Paint paint = new Paint();
         paint.setColor(Color.WHITE);
 
-        canvas.drawRect(x, y, x + size, y + size, paint);
+        canvas.drawRect(x, y, x + cellSize, y + cellSize, paint);
+    }
+
+    public int getX() {
+        return x;
+    }
+
+    public int getY() {
+        return y;
     }
 }

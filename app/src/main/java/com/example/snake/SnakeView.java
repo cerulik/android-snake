@@ -11,8 +11,10 @@ import androidx.annotation.Nullable;
 
 public class SnakeView extends View {
 
-    Snake snake;
-    int width, height = 0;
+    private Snake snake;
+    private RandomFood food;
+    private int width, height = 0, cellSize = 10;
+    private int eatenFoodCounter = 0;
 
     public SnakeView(Context context) {
         super(context);
@@ -31,7 +33,8 @@ public class SnakeView extends View {
 
     private void init() {
         setBackgroundColor(Color.BLACK);
-        snake = new Snake(0, 0, 1, 0, getResources().getDisplayMetrics().density);
+        cellSize = (int) (10 * getResources().getDisplayMetrics().density);
+        snake = new Snake(0, 0, 1, 0, cellSize);
     }
 
     @Override
@@ -39,8 +42,16 @@ public class SnakeView extends View {
         super.onDraw(canvas);
 
         snake.update(width, height);
+
+        if (snake.getX() == food.getX() && snake.getY() == food.getY()) {
+            eatenFoodCounter++;
+            food.nextFood(width, height);
+        }
+
+        food.show(canvas);
         snake.show(canvas);
-        invalidate();
+
+        postInvalidateDelayed(50);
     }
 
     @Override
@@ -48,6 +59,7 @@ public class SnakeView extends View {
         super.onSizeChanged(w, h, oldw, oldh);
         width = w;
         height = h;
+        food = new RandomFood(width, height, cellSize);
     }
 
     @Override
