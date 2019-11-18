@@ -43,8 +43,9 @@ public class SnakeView extends View {
 
         snake.update(width, height);
 
-        if (snake.getX() == food.getX() && snake.getY() == food.getY()) {
+        if (snake.getHeadX() == food.getX() && snake.getHeadY() == food.getY()) {
             eatenFoodCounter++;
+            snake.addCell(food.getX(), food.getY());
             food.nextFood(width, height);
         }
 

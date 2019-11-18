@@ -4,16 +4,21 @@ import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
 
+import java.util.LinkedList;
+
 public class Snake {
-    private int x;
-    private int y;
+
+    // head is on position 0 in list
+    private LinkedList<Position> cells;
+
     private int speedX;
     private int speedY;
     private int cellSize;
 
     public Snake(int x, int y, int speedX, int speedY, int cellSize) {
-        this.x = x;
-        this.y = y;
+
+        cells = new LinkedList<>();
+        cells.add(new Position(x, y));
         this.speedX = speedX;
         this.speedY = speedY;
         this.cellSize = cellSize;
@@ -24,17 +29,22 @@ public class Snake {
         speedY = y;
     }
 
+    public void addCell(int x, int y) {
+        cells.add(new Position(x, y));
+    }
+
     public void update(int width, int height) {
-        int newX = x + speedX * cellSize;
+        int newX = cells.getFirst().getX() + speedX * cellSize;
 
-        if (newX >= 0 && width >= newX + cellSize) {
-            x = newX;
-        }
+        int newY = cells.getFirst().getY() + speedY * cellSize;
 
-        int newY = y + speedY * cellSize;
+        if (newX >= 0 && width >= newX + cellSize && newY >= 0 && height >= newY + cellSize) {
 
-        if (newY >= 0 && height >= newY + cellSize) {
-            y = newY;
+            for (int i = cells.size() - 1; i > 0; i--) {
+                cells.set(i, cells.get(i - 1));
+            }
+
+            cells.set(0, new Position(newX, newY));
         }
     }
 
@@ -42,14 +52,17 @@ public class Snake {
         Paint paint = new Paint();
         paint.setColor(Color.WHITE);
 
-        canvas.drawRect(x, y, x + cellSize, y + cellSize, paint);
+        for (Position position : cells) {
+            canvas.drawRect(position.getX(), position.getY(),
+                    position.getX() + cellSize, position.getY() + cellSize, paint);
+        }
     }
 
-    public int getX() {
-        return x;
+    public int getHeadX() {
+        return cells.getFirst().getX();
     }
 
-    public int getY() {
-        return y;
+    public int getHeadY() {
+        return cells.getFirst().getY();
     }
 }
